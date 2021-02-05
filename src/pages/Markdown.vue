@@ -21,7 +21,7 @@ export default {
   mixins: [debounce],
   data() {
     return {
-      text: ""
+      text: "",
     };
   },
   computed: {
