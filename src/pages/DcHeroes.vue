@@ -17,6 +17,7 @@
         type="text"
         v-model="newHero"
         placeholder="Type Hero Name here"
+        ref="newHeroRef"
       />
       <button
         class="border rounded text-white p-1 bg-gradient-to-r from-red-700 to-pink-500"
@@ -29,36 +30,40 @@
 </template>
 
 <script>
+import { computed, onMounted, ref } from "vue";
 export default {
-  computed: {
-    herosCount() {
-      return this.dcHeros.length;
-    },
-  },
+  setup() {
+    const newHeroRef = ref("");
+    const newHero = ref("Aquaman");
+    const dcHeros = ref([
+      { name: "SuperGirl" },
+      { name: "Flash" },
+      { name: "Batman" },
+      { name: "Superman" },
+      { name: "Arrow" },
+    ]);
 
-  methods: {
-    addHero() {
-      if (this.newHero !== "") {
-        this.dcHeros.unshift({ name: this.newHero });
-        this.newHero = "";
+    onMounted(() => {
+      newHeroRef.value.focus();
+    });
+
+    const herosCount = computed({
+      get: () => {
+        return dcHeros.value.length;
+      },
+    });
+
+    function remove(index) {
+      dcHeros.value = dcHeros.value.filter((hero, i) => i != index);
+    }
+
+    function addHero() {
+      if (newHero.value !== "") {
+        dcHeros.value.unshift({ name: newHero.value });
+        newHero.value = "";
       }
-    },
-    remove(index) {
-      this.dcHeros = this.dcHeros.filter((hero, i) => i != index);
-    },
-  },
-
-  data() {
-    return {
-      newHero: "Aquaman",
-      dcHeros: [
-        { name: "SuperGirl" },
-        { name: "Flash" },
-        { name: "Batman" },
-        { name: "Superman" },
-        { name: "Arrow" },
-      ],
-    };
+    }
+    return { dcHeros, newHero, remove, addHero, newHeroRef, herosCount };
   },
 };
 </script>

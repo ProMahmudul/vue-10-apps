@@ -1,9 +1,11 @@
 <template>
-  <AppHeader @open-login-modal="isLoginOpen = true" />
+  <AppHeader :isLoggedIn="isLoggedIn" @open-login-modal="isLoginOpen = true" />
   <div class="w-full flex">
     <router-view></router-view>
   </div>
-  <LoginModal v-if="isLoginOpen" @close-login="isLoginOpen = false" />
+  <teleport to="body">
+    <LoginModal v-if="isLoginOpen" @close-login="isLoginOpen = false" />
+  </teleport>
 </template>
 
 <script>

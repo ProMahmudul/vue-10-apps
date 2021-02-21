@@ -7,12 +7,17 @@
     <div class="flex h-full">
       <div class="z-30 m-auto bg-white p-2 rounded shadow w-1/3">
         <div class="p-2 border">
-          <h1 class="text-xl my-2 mx-2 text-2xl">Login</h1>
+          <h1 class="my-2 mx-2 text-2xl">Login</h1>
+
+          <GoogleLogin @close-login-from-google="close" />
+
+          <p class="py-3 text-center">Or</p>
           <form class="p-2 my-2" @submit.prevent="submit">
             <div class="my-4">
               <label>Email or Username</label>
               <input
                 type="text"
+                ref="emailRef"
                 v-model="email"
                 class="rounded shadow p-2 w-full"
                 placeholder="Enter your email or username"
@@ -44,7 +49,9 @@
 </template>
 <script>
 import firebase from "../utilities/firebase";
+import GoogleLogin from "../components/Login/GoogleLogin";
 export default {
+  components: { GoogleLogin },
   data() {
     return {
       email: "",
@@ -72,6 +79,18 @@ export default {
     close() {
       this.$emit("close-login");
     },
+    loginWithGoogle() {
+      var provider = new firebase.auth.GoogleAuthProvider();
+      firebase
+        .auth()
+        .signInWithPopup(provider)
+        .then(() => {
+          this.close();
+        });
+    },
+  },
+  mounted() {
+    this.$refs.emailRef.focus();
   },
 };
 </script>
