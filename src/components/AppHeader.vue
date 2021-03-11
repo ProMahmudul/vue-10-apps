@@ -25,6 +25,7 @@ export default {
         { title: "Slider", to: "/slider-carousel" },
         { title: "Calculator", to: "/calculator" },
         { title: "Modal", to: "/reuseable-modal" },
+        { title: "Chat", to: "/chat" },
       ],
     };
   },
