@@ -6,7 +6,7 @@
       {{ item.title }}
     </router-link>
     <button v-if="isLoggedIn" class="mx-2" @click="logout">Logout</button>
-    <button v-else class="mx-2" @click="$emit('open-login-modal')">
+    <button v-else class="mx-2" @click="openLogin">
       Login
     </button>
   </nav>
@@ -25,6 +25,7 @@ export default {
         { title: "Calculator", to: "/calculator" },
         { title: "Modal", to: "/reuseable-modal" },
         { title: "Chat", to: "/chat" },
+        { title: "User Crud", to: "/user-crud" },
       ],
     };
   },
@@ -45,6 +46,9 @@ export default {
           console.log(e);
         });
     },
+    openLogin(){
+      this.$store.commit("setLoginModal", true)
+    }
   },
 };
 </script>
