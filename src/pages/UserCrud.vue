@@ -27,8 +27,9 @@
               <td class="border px-4 py-2">{{ user.name }}</td>
               <td class="border px-4 py-2">{{ user.email }}</td>
               <td class="border px-4 py-2">
+                <button class="px-2 mx-1 py-1 bg-blue-700 text-white" @click="edit(user._id)">Edit</button>
                 <button
-                  class="px-2 py-1 bg-red-800 text-white"
+                  class="px-2 py-1 mx-1 bg-red-800 text-white"
                   @click="destroy(user._id)"
                 >
                   Delete
@@ -91,6 +92,10 @@ export default {
       state.users = data;
     }
 
+    async function edit(){
+
+    }
+
     async function destroy(id) {
       await axios.delete(`/users/${id}`);
       state.users = state.users.filter((user) => user._id !== id);
@@ -100,7 +105,7 @@ export default {
       state.users.push(data);
     }
 
-    return { state, next, prev, destroy, addUser };
+    return { state, next, prev, destroy, addUser, edit };
   },
 };
 </script>
